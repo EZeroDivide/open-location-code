@@ -23,13 +23,13 @@ Get full code from short code and reference location
 var
   ShortCode, FullCode: String;
   Olc: TOpenLocationCode;
-  KairoLat, KairoLng: Double;
+  CairoLat, CairoLng: Double;
 begin
-  ShortCode := 'X4HM+MM';
+  ShortCode := 'X4HM+MM'; // pyradmids of Giza near Cairo
   Olc := TOpenLocationCode.Create(ShortCode);
-  KairoLat := 30.0 + 3.0/60;
-  KairoLng := 31.0 + 14.0/60;
-  Olc := Olc.Recover(KairoLat, KairoLng);
+  CairoLat := 30.0 + 3.0/60;
+  CairoLng := 31.0 + 14.0/60;
+  Olc := Olc.Recover(CairoLat, CairoLng);
   FullCode := Olc.Code;
   assert(FullCode = '7GXHX4HM+MM');
   Writeln(FullCode);
