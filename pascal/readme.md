@@ -8,10 +8,12 @@ var
   Lat, Lng: Double;
   PlusCode: String;
 begin
-  PlusCode := '7GXHX4HM+MM';
-  TOpenLocationCode.TryDecode(PlusCode, lat, lng);
-  PlusCode := TOpenLocationCode.Encode(lat, lng);
-  Writeln(PlusCode);
+  PlusCode := '9F28WXR4+FW';
+  if TOpenLocationCode.TryDecode(PlusCode, lat, lng) then
+  begin
+    PlusCode := TOpenLocationCode.Encode(lat, lng);
+    Writeln(PlusCode);
+  end;
 end;
 ```
 # Development
