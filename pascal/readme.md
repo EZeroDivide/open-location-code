@@ -16,8 +16,6 @@ begin
   end;
 end;
 ```
-# Development
-
 # Authors
 
 * The authors of the Java implementation, on which this is based.
