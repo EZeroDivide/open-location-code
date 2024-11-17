@@ -42,6 +42,7 @@ type
     class function Encode(ALatitude, ALongitude: Double): String; overload; static;
     class function Decode(const ACode: String): TCodeArea; overload; static;
     function Decode: TCodeArea; overload;
+    class function TryDecode(const ACode: String; var ALatitude, ALongitude: Double): Boolean; static;
 
     class function IsFull(const ACode: String): Boolean; overload; static;
     function IsFull: Boolean; overload;
@@ -253,7 +254,7 @@ begin
       LCode[i+1] := PADDING_CHARACTER;
     end;
   end;
-  Self.FCode := Copy(LCode, 1, Max(SEPARATOR_POSITION, ACodeLength));  //?
+  Self.FCode := Copy(LCode, 1, Max(SEPARATOR_POSITION+1, ACodeLength+1));
 end;
 
 constructor TOpenLocationCode.Create(ALatitude, ALongitude: Double);
@@ -316,6 +317,20 @@ begin
   longitudeHi := (lngVal + lngPlaceVal) / LNG_INTEGER_MULTIPLIER;
   Result := TCodeArea.Create(latitudeLo, longitudeLo, latitudeHi, longitudeHi,
     Min(clean.length, MAX_DIGIT_COUNT));
+end;
+
+class function TOpenLocationCode.TryDecode(const ACode: String; var ALatitude, ALongitude: Double): Boolean;
+var
+  LCodeArea: TCodeArea;
+begin
+  try
+    LCodeArea := Decode(ACode);
+    ALatitude := LCodeArea.CenterLatitude;
+    ALongitude := LCodeArea.CenterLongitude;
+    Result := True;
+  except
+    Result := false;
+  end;
 end;
 
 class function TOpenLocationCode.Encode(ALatitude, ALongitude: Double): String;
